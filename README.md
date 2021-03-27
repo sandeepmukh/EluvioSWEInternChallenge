@@ -5,7 +5,7 @@ longest strand of bytes that is identical between two or more files
 
 Use the test set attached (files sample.*) 
 
-Note that the Java implementation is MUCH faster, but asympotitcally the same. 
+Note that the Java implementation is MUCH faster, but asympotitcally the same as Python.
 The time complexity of the algorithm is explained below with n being the number of files and m being the max length of a file:
 
 1. Get all files from the directory O(n)
@@ -22,6 +22,16 @@ The program saves the following to output.json:
 - the length of the strand 
 - the file names where the largest strand appears 
 - the offset where the strand appears in each file 
+
+Output Serialized as
+[
+    str_len,
+    {
+        file_name: offset,
+        file_name: offset,
+        ...
+    }
+]
 
 ### To run
     python3 eluvio_clng.py
