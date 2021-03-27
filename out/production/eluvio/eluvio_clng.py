@@ -55,17 +55,7 @@ def get_sample_files(path):
 
 def create_output(byte_strs: dict, max_tracker: list) -> list:
     '''
-    Creates output list from byte strings and maximum string tracker.
-    Iterates through every bytestring that the substring hasn't already been found in
-    and searches for the longest byte string. It then returns this information the form:
-    [
-        str_len,
-        {
-            file_name: offset,
-            file_name: offset,
-            ...
-        }
-    ]
+    Creates output list from byte strings and maximum string tracker
     '''
     max_str = byte_strs[max_tracker[0]][max_tracker[2][1]:max_tracker[2][0]+max_tracker[2][1]]
     output_lst = [
