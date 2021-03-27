@@ -53,10 +53,31 @@ def get_sample_files(path):
     list.sort(file_list) 
     return file_list
 
+def create_output(byte_strs: dict, max_tracker: list) -> list:
+    '''
+    Creates output list from byte strings and maximum string tracker
+    '''
+    max_str = byte_strs[max_tracker[0]][max_tracker[2][1]:max_tracker[2][0]+max_tracker[2][1]]
+    output_lst = [
+        max_tracker[2][0],
+        {
+            max_tracker[0]:max_tracker[2][1], 
+            max_tracker[1]:max_tracker[2][2], 
+        }
+    ]
+
+    for f in byte_strs.keys():
+        if f in max_tracker:
+            continue
+        else:
+            output_lst[1][f] = byte_strs[f].find(max_str)
+
+    return output_lst
 
 #######################
-####### MAIN #######
+######## MAIN #########
 #######################
+
 def main():
     '''
     1) We go through each pair of files and find the longest common substr in those files.
@@ -80,12 +101,20 @@ def main():
     for f in get_sample_files("files"): 
         byte_strs[f] = Path("./files/"+f).read_bytes()
 
+    max_tracker = [None, None, [0, None, None]] # [file1, file2, [max_len, offset1, offset2]]
     for pair in combinations(byte_strs, 2):
+
         pair_strs = byte_strs[pair[0]], byte_strs[pair[1]]
         info_lst = longest_common_substr(*pair_strs)
-        assert(pair_strs[0][info_lst[1]:info_lst[0]+info_lst[1]] == pair_strs[1][info_lst[2]:info_lst[0]+info_lst[2]])
+        
+        if info_lst[0] > max_tracker[2][0]:
+            max_tracker = [pair[0], pair[1], info_lst]
+
+    return create_output(byte_strs, max_tracker)
+    
+
     
 if __name__ == "__main__":
-    main()
+    print(main())
     # import doctest
     # doctest.testmod()
