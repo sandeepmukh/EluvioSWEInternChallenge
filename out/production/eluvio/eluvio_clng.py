@@ -55,7 +55,17 @@ def get_sample_files(path):
 
 def create_output(byte_strs: dict, max_tracker: list) -> list:
     '''
-    Creates output list from byte strings and maximum string tracker
+    Creates output list from byte strings and maximum string tracker.
+    Iterates through every bytestring that the substring hasn't already been found in
+    and searches for the longest byte string. It then returns this information the form:
+    [
+        str_len,
+        {
+            file_name: offset,
+            file_name: offset,
+            ...
+        }
+    ]
     '''
     max_str = byte_strs[max_tracker[0]][max_tracker[2][1]:max_tracker[2][0]+max_tracker[2][1]]
     output_lst = [
@@ -101,7 +111,7 @@ def main():
     '''
     byte_strs = {}
 
-    for f in get_sample_files("files")[:2]: 
+    for f in get_sample_files("files"): 
         byte_strs[f] = Path("./files/"+f).read_bytes()
 
     max_tracker = [None, None, [0, None, None]] # [file1, file2, [max_len, offset1, offset2]]
@@ -113,8 +123,8 @@ def main():
         if info_lst[0] > max_tracker[2][0]:
             max_tracker = [pair[0], pair[1], info_lst]
 
-    return create_output(byte_strs, max_tracker)
-
+    output = create_output(byte_strs, max_tracker)
+    return output
 def write_json(output_lst):
     '''
     Save the output to a JSON file
@@ -124,6 +134,4 @@ def write_json(output_lst):
 
     
 if __name__ == "__main__":
-    write_json(main())
-    # import doctest
-    # doctest.testmod()
+    main()

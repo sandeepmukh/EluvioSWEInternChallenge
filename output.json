@@ -1,7 +1,7 @@
 [
-    5120,
+    27648,
     {
-        "sample.1": 3072,
-        "sample.10": 5120
+        "files\sample.3" : 17408,
+        "files\sample.2" : 3072,
     }
 ]
