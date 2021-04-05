@@ -14,7 +14,7 @@ The time complexity of the algorithm is explained below with n being the number 
 4. Using this substring, find it in any/all other files. O(nm)
 5. Return information O(n)
 
-Time Complexity: O(nm+m^2)
+Time Complexity: O(nm+n^2*m^2)
 
 Space Complexity: O(nm), but could be further optimizing by using buffered byte string or not putting all files into memory at the same time. 
 
